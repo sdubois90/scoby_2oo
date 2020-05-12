@@ -22,7 +22,7 @@ router.get("/items/:id", (req, res) => {
     });
 });
 
-router.post("/items/", (req, res) => {
+router.post("/items", (req, res) => {
   const { name, description, quantity } = req.body;
   const newItem = { name, description, quantity };
   Item.create(newItem)
