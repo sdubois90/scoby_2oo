@@ -18,6 +18,7 @@ class FormSignup extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    // Context permet de créer un contexte spécial = peu importe où tu es tu peux aller vérifier l'état du contexte
     const { authContext } = this.props;
     // authContext
     //   .signup(this.state)
@@ -45,6 +46,7 @@ class FormSignup extends Component {
       <section className="form-section">
         <pre>{JSON.stringify(this.state)}</pre>
         <header className="header">
+          <pre>{JSON.stringify(this.state)}</pre>
           <h1>
             Hello
             <span role="img" aria-label="hand">

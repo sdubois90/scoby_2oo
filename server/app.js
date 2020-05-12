@@ -14,11 +14,10 @@ const cors = require("cors");
 /**
  * Middlewares
  */
-app.use(
-  cors({
-    origin: process.env.FRONT_END_URL,
-    credentials: true,
-  })
+app.use(cors({
+  origin: process.env.FRONT_END_URL,
+  credentials: true, // Authorises the client to send the cookie. (used for session)
+})
 );
 
 app.use(logger("dev")); // This logs HTTP reponses in the console.
