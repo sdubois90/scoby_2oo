@@ -9,7 +9,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
 const app = express();
-const cors = require('cors')
+const cors = require("cors");
 
 /**
  * Middlewares
@@ -19,7 +19,6 @@ app.use(cors({
   credentials: true, // Authorises the client to send the cookie. (used for session)
 })
 );
-
 
 app.use(logger("dev")); // This logs HTTP reponses in the console.
 app.use(express.json()); // Access data sent as json @req.body
@@ -41,7 +40,6 @@ app.use(function (req, res, next) {
   console.log(req.session.currentUser);
   next();
 });
-
 
 /**
  * Routes

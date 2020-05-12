@@ -1,38 +1,98 @@
 import React, { Component } from "react";
 import LocationAutoComplete from "../LocationAutoComplete";
+import apiHandler from "../../api/apiHandler";
 import "../../styles/form.css";
 
 class ItemForm extends Component {
-  state = {};
+  state = {
+    name: "",
+    description: "",
+    // image: "",
+    // category: "Plant",
+    quantity: 0,
+    // address: "",
+    // location: "",
+  };
 
   handleChange = (event) => {
-    console.log("Wax On Wax Off");
-    this.setState({});
-  }
+    let value;
+    if (event.target.type === "file") {
+      value = event.target.files[0];
+    } else {
+      value = event.target.value;
+    }
+    this.setState({ [event.target.name]: value });
+  };
 
   handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Wax On Wax Off");
+    // function jsonToFormData(inJSON, inTestJSON, inFormData, parentKey) {
+    //   // http://stackoverflow.com/a/22783314/260665
+    //   // Raj: Converts any nested JSON to formData.
+    //   var form_data = inFormData || new FormData();
+    //   var testJSON = inTestJSON || {};
+    //   for (var key in inJSON) {
+    //     // 1. If it is a recursion, then key has to be constructed like "parent.child" where parent JSON contains a child JSON
+    //     // 2. Perform append data only if the value for key is not a JSON, recurse otherwise!
+    //     var constructedKey = key;
+    //     if (parentKey) {
+    //       constructedKey = parentKey + "." + key;
+    //     }
 
-    // In order to send back the data to the client, since there is an input type file you have to send the
-    // data as formdata.
-    // The object that you'll be sending will maybe be a nested object, in order to handle nested objects in our form data
-    // Check out the stackoverflow solution below : )
+    //     var value = inJSON[key];
+    //     if (value && value.constructor === {}.constructor) {
+    //       // This is a JSON, we now need to recurse!
+    //       jsonToFormData(value, testJSON, form_data, constructedKey);
+    //     } else {
+    //       form_data.append(constructedKey, inJSON[key]);
+    //       testJSON[constructedKey] = inJSON[key];
+    //     }
+    //   }
+    //   return form_data;
+    // }
+    // var testJSON = {};
+    // var formdata = jsonToFormData(jsonForPost, testJSON);
 
-    // Nested object into formData by user Raj Pawam Gumdal @stackoverflow : ) => https://stackoverflow.com/a/42241875/13374041
+    const fd = new FormData();
+
+    fd.append("name", this.state.name);
+    fd.append("description", this.state.description);
+    // fd.append("image", this.state.image);
+    // fd.append("category", this.state.category);
+    fd.append("quantity", this.state.quantity);
+    // fd.append("address", this.state.address);
+    // fd.append("location", this.state.location);
+    apiHandler
+      .post("/api/items", fd)
+      .then((apiResponse) => {
+        this.props.history.push("/items");
+      })
+      .catch((apiError) => {
+        console.log(apiError.response.data.message);
+      });
   };
+
+  // In order to send back the data to the client, since there is an input type file you have to send the
+  // data as formdata.
+  // The object that you'll be sending will maybe be a nested object, in order to handle nested objects in our form data
+  // Check out the stackoverflow solution below : )
+
+  // Nested object into formData by user Raj Pawam Gumdal @stackoverflow : ) => https://stackoverflow.com/a/42241875/13374041
 
   handlePlace = (place) => {
     // This handle is passed as a callback to the autocomplete component.
     // Take a look at the data and see what you can get from it.
     // Look at the item model to know what you should retrieve and set as state.
-    console.log(place);
+    console.log(place.properties);
   };
 
   render() {
     return (
       <div className="ItemForm-container">
-        <form className="form" onChange={this.handleChange}>
+        <form
+          className="form"
+          onChange={this.handleChange}
+          onSubmit={this.handleSubmit}
+        >
           <h2 className="title">Add Item</h2>
 
           <div className="form-group">

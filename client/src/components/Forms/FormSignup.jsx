@@ -28,10 +28,12 @@ class FormSignup extends Component {
     //   .catch((error) => {
     //     console.log(error);
     //   });
+
     apiHandler
       .signup(this.state)
       .then((data) => {
         authContext.setUser(data);
+
         this.props.history.push("/");
       })
       .catch((error) => {
@@ -42,6 +44,7 @@ class FormSignup extends Component {
   render() {
     return (
       <section className="form-section">
+        <pre>{JSON.stringify(this.state)}</pre>
         <header className="header">
           <pre>{JSON.stringify(this.state)}</pre>
           <h1>
