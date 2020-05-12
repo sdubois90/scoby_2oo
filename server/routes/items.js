@@ -23,8 +23,9 @@ router.get("/items/:id", (req, res) => {
 });
 
 router.post("/items", (req, res) => {
-  const { name, description, quantity } = req.body;
-  const newItem = { name, description, quantity };
+  console.log(req.body)
+  const { name, description, quantity, category, address, location } = req.body;
+  const newItem = { name, description, quantity, category, address, location };
   Item.create(newItem)
     .then((itemDocument) => {
       res.status(201).json(itemDocument);

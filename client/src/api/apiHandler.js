@@ -50,4 +50,11 @@ export default {
       .then((res) => res.data)
       .catch(errorHandler);
   },
+
+  post() {
+    return service
+      .post("/api/items")
+      .then((res) => res.data)
+      .catch(errorHandler)
+  }
 };

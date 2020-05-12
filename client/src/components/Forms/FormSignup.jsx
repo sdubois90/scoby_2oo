@@ -44,9 +44,8 @@ class FormSignup extends Component {
   render() {
     return (
       <section className="form-section">
-        <pre>{JSON.stringify(this.state)}</pre>
         <header className="header">
-          <pre>{JSON.stringify(this.state)}</pre>
+          <pre>{JSON.stringify(this.state, null, 2)}</pre>
           <h1>
             Hello
             <span role="img" aria-label="hand">

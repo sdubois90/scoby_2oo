@@ -7,11 +7,11 @@ class ItemForm extends Component {
   state = {
     name: "",
     description: "",
-    // image: "",
-    // category: "Plant",
+    image: "",
+    category: "Plant",
     quantity: 0,
-    // address: "",
-    // location: "",
+    address: "",
+    location: "",
   };
 
   handleChange = (event) => {
@@ -25,6 +25,7 @@ class ItemForm extends Component {
   };
 
   handleSubmit = (event) => {
+    event.preventDefault();
     // function jsonToFormData(inJSON, inTestJSON, inFormData, parentKey) {
     //   // http://stackoverflow.com/a/22783314/260665
     //   // Raj: Converts any nested JSON to formData.
@@ -56,17 +57,19 @@ class ItemForm extends Component {
 
     fd.append("name", this.state.name);
     fd.append("description", this.state.description);
-    // fd.append("image", this.state.image);
-    // fd.append("category", this.state.category);
+    fd.append("image", this.state.image);
+    fd.append("category", this.state.category);
     fd.append("quantity", this.state.quantity);
-    // fd.append("address", this.state.address);
-    // fd.append("location", this.state.location);
+    fd.append("address", this.state.address);
+    fd.append("location", this.state.location);
     apiHandler
       .post("/api/items", fd)
       .then((apiResponse) => {
+        console.log(apiResponse)
         this.props.history.push("/items");
       })
       .catch((apiError) => {
+        console.log(apiError)
         console.log(apiError.response.data.message);
       });
   };
@@ -79,15 +82,18 @@ class ItemForm extends Component {
   // Nested object into formData by user Raj Pawam Gumdal @stackoverflow : ) => https://stackoverflow.com/a/42241875/13374041
 
   handlePlace = (place) => {
+    console.log(place)
     // This handle is passed as a callback to the autocomplete component.
     // Take a look at the data and see what you can get from it.
     // Look at the item model to know what you should retrieve and set as state.
+    // this.props.
     console.log(place.properties);
   };
 
   render() {
     return (
       <div className="ItemForm-container">
+        <pre>{JSON.stringify(this.state, null, 2)}</pre>
         <form
           className="form"
           onChange={this.handleChange}
@@ -104,6 +110,7 @@ class ItemForm extends Component {
               className="input"
               type="text"
               placeholder="What are you giving away ?"
+              name="name"
             />
           </div>
 
@@ -112,7 +119,7 @@ class ItemForm extends Component {
               Category
             </label>
 
-            <select id="category" defaultValue="-1">
+            <select id="category" defaultValue="-1" name="category">
               <option value="-1" disabled>
                 Select a category
               </option>
@@ -127,14 +134,14 @@ class ItemForm extends Component {
             <label className="label" htmlFor="quantity">
               Quantity
             </label>
-            <input className="input" id="quantity" type="number" />
+            <input className="input" id="quantity" type="number" name="quantity" />
           </div>
 
           <div className="form-group">
             <label className="label" htmlFor="location">
               Address
             </label>
-            <LocationAutoComplete onSelect={this.handlePlace} />
+            <LocationAutoComplete onSelect={this.handlePlace} name="location" />
           </div>
 
           <div className="form-group">
@@ -145,6 +152,7 @@ class ItemForm extends Component {
               id="description"
               className="text-area"
               placeholder="Tell us something about this item"
+              name = "description"
             ></textarea>
           </div>
 
@@ -152,7 +160,7 @@ class ItemForm extends Component {
             <label className="custom-upload label" htmlFor="image">
               Upload image
             </label>
-            <input className="input" id="image" type="file" />
+            <input className="input" id="image" type="file" name="image" />
           </div>
 
           <h2>Contact information</h2>
