@@ -5,7 +5,7 @@ import "../../styles/form.css";
 class ItemForm extends Component {
   state = {};
 
-  handleChange(event) {
+  handleChange = (event) => {
     console.log("Wax On Wax Off");
     this.setState({});
   }

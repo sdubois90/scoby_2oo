@@ -16,6 +16,7 @@ const cors = require('cors')
  */
 app.use(cors({
   origin: process.env.FRONT_END_URL,
+  credentials: true, // Authorises the client to send the cookie. (used for session)
 })
 );
 

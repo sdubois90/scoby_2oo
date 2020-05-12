@@ -23,6 +23,9 @@ import { AuthContext } from "./AuthProvider";
 export const withUser = (ComponentToPassUserContextTo) => {
   return function (props) {
     return (
+      // Contxte donne provider + consumer
+      // consumer la donnée donnée pas provider
+      // au lieu d'écrire tout ça on passe le component au withUser et il passe des props
       <AuthContext.Consumer>
         {(context) => (
           <ComponentToPassUserContextTo {...props} authContext={context} />

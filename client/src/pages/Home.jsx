@@ -1,13 +1,15 @@
 import React from "react";
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
-// import arrow from '../marker-purpke.svg'
+import { Marker } from "react-mapbox-gl";
+import arrow from '../marker-purple.svg'
+import { Image } from "react-mapbox-gl"
+import logo from '../logo192.png'
 
 const Home = (props) => {
   // Implement react map box here.
 
   const Map = ReactMapboxGl({
-    accessToken:
-      'pk.eyJ1Ijoic2ViZHVib2lzOTAiLCJhIjoiY2thMmM1OTQ3MDh1YTNsb2dxamNzaXdmbCJ9._4108RVJ4WGYk8u1_jt9-g',
+    accessToken: process.env.REACT_APP_MAPBOX_TOKEN,
     maxZoom: 20
   });
 
@@ -26,10 +28,17 @@ const Home = (props) => {
         }}
         center={[2.3522, 48.8566]}
       >
-        <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-          <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-          <Feature coordinates={[2.3522, 48.8566]} />
-        </Layer>
+        {/* <Marker coordinates={[2.3522, 48.8566]} anchor="bottom">
+          <img src={arrow} alt="" />
+        </Marker> */}
+        
+        <Image id={'image-uid'} data={logo} style={{width:"50px"}} />
+
+          <Layer type="symbol" layout={{ "icon-image": "rocket-15" }}>
+            <Feature coordinates={[2.2399, 48.8397]} />
+            <Feature coordinates={[2.2399, 48.8597]} />
+          </Layer>
+
       </Map>;
     </div>
   );
