@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Item = require("../models/Item");
+const upload = require("../config/cloudinary");
 
 router.get("/items", (req, res) => {
   Item.find()
@@ -22,15 +23,27 @@ router.get("/items/:id", (req, res) => {
     });
 });
 
-router.post("/items", (req, res) => {
-  const { name, description, quantity } = req.body;
-  const newItem = { name, description, quantity };
+router.post("/items", upload.single("image"), (req, res, next) => {
+  console.log(req.body);
+  // Validate req body before creating.
+  const { name, description, category, quantity, location } = req.body;
+  // You should really validate here
+  const newItem = {
+    name,
+    description,
+    category,
+    quantity,
+    location,
+  };
+  if (req.file) {
+    newItem.image = req.file.secure_url;
+  }
   Item.create(newItem)
-    .then((itemDocument) => {
-      res.status(201).json(itemDocument);
+    .then((dbRes) => {
+      res.status(201).json(dbRes);
     })
     .catch((error) => {
-      console.log(error);
+      res.status(500).json(error);
     });
 });
 
