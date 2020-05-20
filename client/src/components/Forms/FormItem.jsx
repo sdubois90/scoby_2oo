@@ -62,7 +62,6 @@ class ItemForm extends Component {
   };
 
   render() {
-    console.log("State:", this.state);
     return (
       <div className="ItemForm-container">
         <pre>{JSON.stringify(this.state, null, 2)}</pre>
@@ -90,8 +89,7 @@ class ItemForm extends Component {
               Category
             </label>
             <select
-              onChange={this.handleChange}
-              value={this.state.category[0]}
+              // onChange={this.handleChange}
               id="category"
               defaultValue="-1"
               name="category"
